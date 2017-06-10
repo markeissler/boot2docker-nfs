@@ -1,8 +1,33 @@
-# Boot2Docker
+# Boot2Docker-NFS
 
-Boot2Docker is a lightweight Linux distribution made specifically to run
+__Boot2Docker-NFS__ is a lightweight Linux distribution made specifically to run
 [Docker](https://www.docker.com/) containers. It runs completely from RAM, is a
 small ~38MB download and boots in ~5s (YMMV).
+
+This fork of [boot2docker](https://github.com/boot2docker/boot2docker) adds
+support for NFS clients so that NFS services are available on boot. This is
+important if you'd like to mount NFS volumes on the node that are then shared
+to the containers it hosts via traditional [Docker data volume](https://docs.docker.com/engine/tutorials/dockervolumes/)
+support.
+
+>BETA: Boot2Docker-NFS is currently in pre-release. That doesn't mean it's not
+ready for production, it just means it hasn't been tested by a large audience
+yet. The more the merrier and the faster we get to v1.0. Install it, open issues
+if you find bugs.
+
+__Boot2Docker-NFS__ must currently be built: there is no ISO currently available.
+For more information on building an ISO see:
+
+[Build your own Boot2Docker-NFS ISO](#nfs-iso)
+
+The majority of documentation that follows is from the upstream project.
+
+## Version Numbers
+
+This project introduces different version numbering than the original [boot2docker](https://github.com/boot2docker/boot2docker)
+release upon which it was forked. The reason is simply that this project will
+become a rewrite that departs from the original. In a sense, this project is a
+placeholder for the next one.
 
 ## Features
 

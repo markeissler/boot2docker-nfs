@@ -13,9 +13,12 @@
 /etc/rc.d/hostname
 
 # Trigger the DHCP request sooner (the x64 bit userspace appears to be a second slower)
-echo "$(date) dhcp -------------------------------"
-/etc/rc.d/dhcp.sh
-echo "$(date) dhcp -------------------------------"
+# @TODO: Remove redundant dhcp startup
+# @NOTE: For boot2docker-nfs we don't need/want this here, instead we ust fall back to the standard TCE support
+# for dhcp startup by tc-config.
+#echo "$(date) dhcp -------------------------------"
+# /etc/rc.d/dhcp.sh
+#echo "$(date) dhcp -------------------------------"
 
 # Mount cgroups hierarchy
 /etc/rc.d/cgroupfs-mount

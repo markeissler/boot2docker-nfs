@@ -1,2 +1,4 @@
 #!/bin/sh
-find /usr/local/tce.installed/ -type f -exec sh -c {} \;
+find /usr/local/tce.installed/ -type f \
+    -not -name "libtirpc" \
+    -not -name "nfs-utils" -exec sh -c {} \;

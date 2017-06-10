@@ -1,0 +1,30 @@
+#!/bin/sh
+# RC Script for Tiny Core Linux
+# (c) Robert Shingledecker 2004-2012
+
+# Log stdout, stripping ansi colors along the way.
+logfile="/var/log/rcS-boot.log"
+pipe="/tmp/rcS.pipe.$$"
+mkfifo "$pipe"
+trap 'rm "$pipe"' INT TERM
+
+# Filter out ansi codes, convert control M returns, convert control H backspace.
+sedcmd="sed -r -e $(echo -e 's/\x1B\\[[0-9;]*[a-zA-Z]//g') -e $(echo -e 's/\x0D/\\n/g') -e $(echo -e 's/[\/]?\x08//g')"
+($sedcmd < "$pipe") >> "$logfile" &
+
+# Redirect stdout to a logfile.
+# NOTE: stderr will still route to its normal destination.
+exec > "$pipe"
+
+# Mount /proc.
+[ -f /proc/cmdline ] || /bin/mount /proc
+
+# Remount rootfs rw.
+/bin/mount -o remount,rw /
+
+# Mount system devices from /etc/fstab.
+/bin/mount -a
+
+clear
+
+/etc/init.d/tc-config

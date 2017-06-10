@@ -115,6 +115,20 @@ the "samba" container that refers to it by name. So, in this example, if you
 were on OS-X you now have /Volumes/data and /data in container being shared. You
 can change the paths as needed.
 
+#### NFSv3 Client Support
+
+Support for NFSv3 file locking is not supported in the standard __boot2docker.iso__.
+If you need to support mounting of NFS volumes from a NFSv3 server and require
+file locking, you will need to build the __boot2docker-nfs.iso__, which can
+easily be accomplished with the `Dockerfile.nfs` file provided.
+
+It's important to note that this allows you to mount NFS volumes on a docker host
+running the __boot2docker-nfs.iso__ image. In turn, this allows hosted containers
+to share these mounted volumes. You are not using NFS inside a container itself.
+
+For more information on `Dockerfile.nfs` see [Build your own Boot2Docker-NFS ISO](#nfs-iso).
+
+
 ##### VirtualBox Guest Additions
 
 Alternatively, Boot2Docker includes the VirtualBox Guest Additions built in for
@@ -251,6 +265,12 @@ partition, and install an MBR.
 
 Goto [How to build](doc/BUILD.md) for Documentation on how to build your own
 Boot2Docker ISOs.
+
+<a name=nfs-iso></a>
+
+#### Build your own Boot2Docker-NFS ISO
+
+Goto [How to build with NFS client support](doc/BUILD_NFS.md)
 
 ## Troubleshooting
 

@@ -115,7 +115,7 @@ the "samba" container that refers to it by name. So, in this example, if you
 were on OS-X you now have /Volumes/data and /data in container being shared. You
 can change the paths as needed.
 
-#### NFSv3 Client Support
+##### NFSv3 Client Support
 
 Support for NFSv3 file locking is not supported in the standard __boot2docker.iso__.
 If you need to support mounting of NFS volumes from a NFSv3 server and require

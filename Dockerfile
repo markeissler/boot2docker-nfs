@@ -20,7 +20,7 @@ RUN apt-get update && apt-get -y install  unzip \
                         p7zip-full
 
 # https://www.kernel.org/
-ENV KERNEL_VERSION  4.4.70
+ENV KERNEL_VERSION  4.4.74
 
 # Fetch the kernel sources
 RUN curl --retry 10 https://www.kernel.org/pub/linux/kernel/v${KERNEL_VERSION%%.*}.x/linux-$KERNEL_VERSION.tar.xz | tar -C / -xJ && \
@@ -299,7 +299,7 @@ RUN depmod -a -b "$ROOTFS" "$KERNEL_VERSION-boot2docker"
 COPY VERSION $ROOTFS/etc/version
 RUN cp -v "$ROOTFS/etc/version" /tmp/iso/version
 
-ENV DOCKER_CHANNEL edge
+ENV DOCKER_CHANNEL stable
 
 # Get the Docker binaries with version that matches our boot2docker version.
 RUN set -ex; \

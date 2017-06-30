@@ -28,9 +28,9 @@ ID_LIKE=tcl
 VERSION_ID=$b2dVersion
 PRETTY_NAME="Boot2Docker $b2dVersion (TCL $tclVersion); $b2dDetail"
 ANSI_COLOR="1;34"
-HOME_URL="http://boot2docker.io"
-SUPPORT_URL="https://github.com/boot2docker/boot2docker"
-BUG_REPORT_URL="https://github.com/boot2docker/boot2docker/issues"
+HOME_URL="http://github.com/markeissler/boot2docker-nfs"
+SUPPORT_URL="http://github.com/markeissler/boot2docker-nfs"
+BUG_REPORT_URL="${SUPPORT_URL}/issues"
 EOOS
 
 # Pack the rootfs

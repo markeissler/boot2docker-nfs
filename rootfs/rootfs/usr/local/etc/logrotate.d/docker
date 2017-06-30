@@ -1,0 +1,19 @@
+/var/lib/boot2docker/docker.log {
+    daily
+    notifempty
+    missingok
+    compress
+    delaycompress
+    copytruncate
+    rotate 7
+}
+
+/var/lib/docker/containers/*/*.log {
+    daily
+    notifempty
+    missingok
+    compress
+    delaycompress
+    copytruncate
+    rotate 7
+}

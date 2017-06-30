@@ -1,0 +1,3 @@
+/var/log/udhcp.log {
+    create 0644 root root
+}

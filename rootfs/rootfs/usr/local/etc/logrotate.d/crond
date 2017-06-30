@@ -1,0 +1,3 @@
+/var/lib/boot2docker/log/crond.log {
+    create 0644 root root
+}

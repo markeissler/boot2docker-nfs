@@ -9,7 +9,7 @@
 FROM boot2docker/boot2docker
 MAINTAINER Mark Eissler
 
-ADD . $ROOTFS/data/
+ADD ./rootfs/rootfs/ "$ROOTFS/data"
 
 # Fix nfs-client init.d file for checking status
 COPY rootfs/rootfs/usr/local/etc/init.d/nfs-client "$ROOTFS/usr/local/etc/init.d/nfs-client"
@@ -84,15 +84,20 @@ RUN set -ex \
     && make DESTDIR="$ROOTFS" install
 
 # Configure logrotate
-COPY rootfs/rootfs/usr/local/etc/logrotate.conf "$ROOTFS/usr/local/etc/logrotate.conf"
-COPY rootfs/rootfs/usr/local/etc/logrotate.d "$ROOTFS/usr/local/etc/logrotate.d"
-RUN chmod 0644 "$ROOTFS/usr/local/etc/logrotate.conf" \
+RUN cp -v "$ROOTFS/data/usr/local/etc/logrotate.conf" "$ROOTFS/usr/local/etc/logrotate.conf" \
+    && cp -Rv "$ROOTFS/data/usr/local/etc/logrotate.d" "$ROOTFS/usr/local/etc/logrotate.d" \
+    && chmod 0644 "$ROOTFS/usr/local/etc/logrotate.conf" \
     && chmod 0755 "$ROOTFS/usr/local/etc/logrotate.d" \
     && find "$ROOTFS/usr/local/etc/logrotate.d" -type f -exec chmod --changes 0644 '{}' +
 
 # Setup crontab
-COPY rootfs/rootfs/etc/crontab "$ROOTFS/etc/crontab"
-RUN chmod 0644 "$ROOTFS/etc/crontab"
+RUN mkdir -p "$ROOTFS/var/spool/cron/crontabs" \
+    && cp -v "$ROOTFS/data/var/spool/cron/crontabs/root" "$ROOTFS/var/spool/cron/crontabs/root" \
+    && chown root:root "$ROOTFS/var/spool/cron/crontabs/root" \
+    && chmod 0600 "$ROOTFS/var/spool/cron/crontabs/root"
+
+# Clean up
+RUN rm -rv "$ROOTFS/data"
 
 # Update version for iso
 RUN cp -v "$ROOTFS/etc/version" /tmp/iso/version

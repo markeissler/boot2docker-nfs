@@ -1,0 +1,37 @@
+# /var/spool/cron/crontabs/root
+# boot2docker-nfs
+#
+# (C) 2017 Mark Eissler, moe@markeissler.org
+#
+
+#
+# Supress extraneous execution cruft by appending the following to each entry
+# in the crontab:
+#
+#   >/dev/null 2>&1
+#
+# Otherwise the MAILTO address will receive a report for each command run.
+# NOTE: That only works for the output of the very last command if there is more
+# than one command that generates output. That's when you need to use braces...
+#
+# Use rounded brackets to group output of commands:
+#
+#   (cat ~/log/space && echo && df -h)
+#
+# Otherwise only the output of the last command will be suppressed from getting
+# mailed to you.
+#
+
+# Global variables
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:$HOME/bin
+MAILTO=root
+
+#        minute (0-59),
+#        |     hour (0-23),
+#        |     |     day of the month (1-31),
+#        |     |     |     month of the year (1-12),
+#        |     |     |     |     day of the week (0-6 with 0=Sunday).
+#        |     |     |     |     |      commands
+
+         0     0     *     *     *      logrotate /usr/local/etc/logrotate.conf >/dev/null 2>&1

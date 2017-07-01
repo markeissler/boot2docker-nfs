@@ -34,6 +34,9 @@ RUN find "$ROOTFS/etc/rc.d/" \
     "$ROOTFS/etc/init.d/" \
     "$ROOTFS/usr/local/etc/init.d/nfs-client" -type f -exec chmod --changes +x '{}' +
 
+# Copy updated boot messages
+COPY rootfs/isolinux/f4 /tmp/iso/boot/isolinux/f4
+
 # Copy updated boot params
 COPY rootfs/isolinux/isolinux.cfg /tmp/iso/boot/isolinux/isolinux.cfg
 
@@ -44,7 +47,7 @@ COPY rootfs/rootfs/opt/bootscript.sh "$ROOTFS/opt/bootscript.sh"
 RUN find "$ROOTFS/opt/" -type f -name "*.sh" -exec chmod --changes +x '{}' +
 
 # Copy updated sysctl.conf (to fix segfault for...
-#   "cannot stat /proc/sys/net/ipv6/conf/all/forwarding: No such file or directory"
+#   "cannot stat /proc/sys/net/ipv6/conf/all/forwarding: No such file or directory")
 COPY rootfs/rootfs/etc/sysctl.conf "$ROOTFS/etc/sysctl.conf"
 
 # Patch VERSION to include 'nfs'

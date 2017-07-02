@@ -31,7 +31,7 @@ placeholder for the next one.
 
 ## Features
 
-* Kernel 4.4.70 with AUFS, Docker v17.06.0-ce-rc1 - using libcontainer
+* Kernel 4.4.74 with AUFS, Docker v17.03.2-ce - using libcontainer
 * Container persistence via disk automount on `/var/lib/docker`
 * SSH keys persistence via disk automount
 

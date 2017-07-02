@@ -1,5 +1,17 @@
 #!/bin/sh
 
+# Reset log directory permissions
+#
+# @TODO: Fix upstream location for writing userdata.log during create.
+#
+# Need to hold off on this update since the docker-machine driver will write the userdata.log to /var/log as
+# user docker:staff when passing the "create" command. The system will not be able to copy userdata if we change the
+# perms without updating where the userdata.log is written during the create step.
+#
+# chown root:root /var/log && chmod 0755 /var/log \
+#     && find /var/log -type f -exec chown -c root:root '{}' + \
+#     && find /var/log -type f -exec chmod -c 0644 '{}' +
+
 # Configure sysctl
 /etc/rc.d/sysctl
 
@@ -43,7 +55,16 @@ if grep -q '^docker:' /etc/passwd; then
     # if we have the docker user, let's add it do the docker group
     /bin/addgroup docker docker
 
-    #preload data from boot2docker-cli
+    # preload data from boot2docker-cli
+    #
+    # NOTE: This is run on reboot/restart to restore userdata. A similar sequence is run when creating a machine by the
+    # docker-machine driver (e.g. vmwarefusion):
+    #
+    #   https://github.com/docker/machine/blob/master/drivers/vmwarefusion/fusion_darwin.go#L366
+    #
+    # It would be better practice if the docker:staff owned log files are written to the /home/docker directory. This
+    # should likely be changed upstream. Unfortunately, there's no easy way to fix it post-boot.
+    #
     if [ -e "/var/lib/boot2docker/userdata.tar" ]; then
         tar xf /var/lib/boot2docker/userdata.tar -C /home/docker/ > /var/log/userdata.log 2>&1
         rm -f '/home/docker/boot2docker, please format-me'
